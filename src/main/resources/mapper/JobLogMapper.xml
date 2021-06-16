@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hankun.satokenlearn.mapper.JobLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hankun.satokenlearn.entity.JobLog">
+        <id column="id" property="id" />
+        <result column="create_date" property="createDate" />
+        <result column="job_name" property="jobName" />
+        <result column="job_group" property="jobGroup" />
+        <result column="invoke_target" property="invokeTarget" />
+        <result column="job_message" property="jobMessage" />
+        <result column="job_status" property="jobStatus" />
+        <result column="exception_info" property="exceptionInfo" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        create_date,
+        id, job_name, job_group, invoke_target, job_message, job_status, exception_info
+    </sql>
+
+</mapper>

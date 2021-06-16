@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hankun.satokenlearn.mapper.LogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hankun.satokenlearn.entity.Log">
+        <id column="id" property="id" />
+        <result column="create_date" property="createDate" />
+        <result column="oper_name" property="operName" />
+        <result column="oper_param" property="operParam" />
+        <result column="url" property="url" />
+        <result column="ip" property="ip" />
+        <result column="business_name" property="businessName" />
+        <result column="method" property="method" />
+        <result column="result" property="result" />
+        <result column="log_status" property="logStatus" />
+        <result column="error" property="error" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        create_date,
+        id, oper_name, oper_param, url, ip, business_name, method, result, log_status, error
+    </sql>
+
+</mapper>

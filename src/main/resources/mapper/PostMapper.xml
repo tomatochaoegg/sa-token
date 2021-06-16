@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hankun.satokenlearn.mapper.PostMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hankun.satokenlearn.entity.Post">
+        <id column="id" property="id" />
+        <result column="create_by" property="createBy" />
+        <result column="create_date" property="createDate" />
+        <result column="update_by" property="updateBy" />
+        <result column="update_date" property="updateDate" />
+        <result column="del_flag" property="delFlag" />
+        <result column="remark" property="remark" />
+        <result column="post_code" property="postCode" />
+        <result column="post_name" property="postName" />
+        <result column="post_sort" property="postSort" />
+        <result column="post_status" property="postStatus" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        create_by,
+        create_date,
+        update_by,
+        update_date,
+        del_flag,
+        remark,
+        id, post_code, post_name, post_sort, post_status
+    </sql>
+
+</mapper>
