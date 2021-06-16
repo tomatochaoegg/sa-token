@@ -4,7 +4,8 @@
 学习sa-token
 
 #### 软件架构
-软件架构说明
+sa-token \ springboot \ hutool \ mybatis-plus
+某些依赖没用使用到 可以删除
 
 
 #### 安装教程
