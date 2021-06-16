@@ -32,7 +32,7 @@ import java.util.*;
 public class AutoFile {
 
     public static void main(String[] args) {
-        String url = "jdbc:mysql://localhost:3306/test?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false";
+        String url = "jdbc:mysql://localhost:3306/my-springsecurity-plus?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false";
         String username = "root";
         String password = "root";
         String driver = "com.mysql.cj.jdbc.Driver";

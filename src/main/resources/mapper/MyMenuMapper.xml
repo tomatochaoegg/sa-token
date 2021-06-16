@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hankun.satokenlearn.mapper.MyMenuMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hankun.satokenlearn.entity.MyMenu">
+        <id column="menu_id" property="menuId" />
+        <result column="parent_id" property="parentId" />
+        <result column="menu_name" property="menuName" />
+        <result column="icon" property="icon" />
+        <result column="url" property="url" />
+        <result column="permission" property="permission" />
+        <result column="sort" property="sort" />
+        <result column="type" property="type" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        menu_id, parent_id, menu_name, icon, url, permission, sort, type, create_time, update_time
+    </sql>
+
+    <!-- 通用查询结果列 别名 -->
+    <sql id="Base_Column_List_Alias">
+        myMenu.menu_id AS menuId,myMenu.parent_id AS parentId,myMenu.menu_name AS menuName,myMenu.icon,myMenu.url,myMenu.permission,myMenu.sort,myMenu.type,myMenu.create_time AS createTime,myMenu.update_time AS updateTime
+    </sql>
+</mapper>

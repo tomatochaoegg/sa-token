@@ -3,65 +3,60 @@ package com.hankun.satokenlearn.controller;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
-import cn.hutool.captcha.CaptchaUtil;
-import cn.hutool.captcha.ShearCaptcha;
-import cn.hutool.core.io.IoUtil;
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import com.hankun.satokenlearn.base.controller.BaseController;
+import com.hankun.satokenlearn.config.StpUserUtil;
 import com.hankun.satokenlearn.constant.Constant;
 import com.hankun.satokenlearn.constant.R;
 import com.hankun.satokenlearn.constant.ReturnCode;
 import com.hankun.satokenlearn.entity.UserInfo;
-import com.hankun.satokenlearn.service.impl.UserInfoServiceImpl;
 import com.hankun.satokenlearn.util.BPwdEncoderUtil;
-import com.hankun.satokenlearn.util.RequestIpUtils;
 import io.swagger.annotations.Api;
+import com.hankun.satokenlearn.entity.MyUser;
+import com.hankun.satokenlearn.service.impl.MyUserServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
+import com.hankun.satokenlearn.base.controller.BaseController;
 
 /**
  * <p>
- * 用户表 前端控制器
+ *  前端控制器
  * </p>
  *
  * @author hankun
- * @since 2021-06-04
+ * @since 2021-06-16
  */
 @RestController
-@RequestMapping("/user-info")
-@Api(value = "UserInfoController", tags = {"用户表操作接口"})
+@RequestMapping("/my-user")
+@Api(value = "MyUserController", tags = {"操作接口"})
+@DS("db1")
 @Slf4j
-public class UserInfoController extends BaseController<UserInfoServiceImpl,UserInfo> {
+public class MyUserController extends BaseController<MyUserServiceImpl,MyUser> {
 
     /**
      * 登录
      *
-     * @param loginInputDTO
+     * @param myUser
      * @return
      * @throws Exception
      */
     @PostMapping("/login")
     @ApiOperation(value = "用户登录")
     @ApiOperationSupport(order = 1, author = "dcy")
-    public R<String> login(@Validated @ApiParam @RequestBody UserInfo loginInputDTO) {
+    public R<String> login(@Validated @ApiParam @RequestBody MyUser myUser) {
         // ----------------可以不调用------------------------
-        UserInfo userInfo = baseService.getUserInfoByUsername(loginInputDTO.getUsername());
+        MyUser userInfo = baseService.getUserInfoByUsername(myUser.getUserName());
         if (userInfo == null) {
             return R.error(ReturnCode.USER_PASSWORD_ERROR);
         }
-        if (Constant.ONE.equals(userInfo.getUserStatus())) {
+        if (Constant.ZERO.equals(userInfo.getStatus())) {
             return R.error(ReturnCode.USER_LOCKED_ERROR);
         }
-        if (!BPwdEncoderUtil.matches(loginInputDTO.getPassword(), userInfo.getPassword().replace("{bcrypt}", ""))) {
+        if (!BPwdEncoderUtil.matches(myUser.getPassword(), userInfo.getPassword().replace("{bcrypt}", ""))) {
             return R.error(ReturnCode.USER_PASSWORD_ERROR);
         }
 //        LoginOutputDTO loginOutputDTO = mUserInfoMapper.userInfoToLoginOutputDTO(userInfo);
@@ -75,11 +70,11 @@ public class UserInfoController extends BaseController<UserInfoServiceImpl,UserI
 //            loginOutputDTO.setRoleName(CollUtil.join(authRoleListByUserId.stream().map(Role::getRoleName).collect(Collectors.toList()), ","));
 //        }
         // sa-token 登录 此处有多个api 基本满足所有的登录需求 很实用
-        StpUtil.setLoginId(userInfo.getId());
+        StpUserUtil.setLoginId(userInfo.getUserId());
         // 获取token
-        SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
+        SaTokenInfo tokenInfo = StpUserUtil.getTokenInfo();
         // 获取session
-        SaSession saSession = StpUtil.getSession();
+        SaSession saSession = StpUserUtil.getSession();
         // 设置用户信息
         saSession.setAttribute(Constant.SESSION_USER_KEY, "权限菜单信息");
         return success(tokenInfo.getTokenValue());
@@ -91,14 +86,5 @@ public class UserInfoController extends BaseController<UserInfoServiceImpl,UserI
     public R<String> test() {
         log.info("---------");
         return success("成功");
-    }
-
-
-    @PostMapping("/logout")
-    @ApiOperation(value = "用户退出")
-    @ApiOperationSupport(order = 10, author = "dcy")
-    public R<String> logout() {
-        StpUtil.logout();
-        return success("退出成功");
     }
 }

@@ -6,6 +6,7 @@
 #### 软件架构
 sa-token \ springboot \ hutool \ mybatis-plus
 某些依赖没用使用到 可以删除
+参考了sa-token、dcy-fast开源项目
 
 
 #### 安装教程
@@ -16,9 +17,7 @@ sa-token \ springboot \ hutool \ mybatis-plus
 
 #### 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+里面使用了两种用户认证体系（两个不同的库） 互不影响
 
 #### 参与贡献
 

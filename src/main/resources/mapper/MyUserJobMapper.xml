@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hankun.satokenlearn.mapper.MyUserJobMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hankun.satokenlearn.entity.MyUserJob">
+        <id column="user_id" property="userId" />
+        <result column="job_id" property="jobId" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        user_id, job_id
+    </sql>
+
+    <!-- 通用查询结果列 别名 -->
+    <sql id="Base_Column_List_Alias">
+        myUserJob.user_id AS userId,myUserJob.job_id AS jobId
+    </sql>
+</mapper>

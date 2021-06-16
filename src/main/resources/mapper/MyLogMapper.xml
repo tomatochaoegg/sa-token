@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hankun.satokenlearn.mapper.MyLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hankun.satokenlearn.entity.MyLog">
+        <id column="log_id" property="logId" />
+        <result column="user_name" property="userName" />
+        <result column="ip" property="ip" />
+        <result column="description" property="description" />
+        <result column="params" property="params" />
+        <result column="browser" property="browser" />
+        <result column="time" property="time" />
+        <result column="type" property="type" />
+        <result column="method" property="method" />
+        <result column="create_time" property="createTime" />
+        <result column="exception_detail" property="exceptionDetail" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        log_id, user_name, ip, description, params, browser, time, type, method, create_time, exception_detail
+    </sql>
+
+    <!-- 通用查询结果列 别名 -->
+    <sql id="Base_Column_List_Alias">
+        myLog.log_id AS logId,myLog.user_name AS userName,myLog.ip,myLog.description,myLog.params,myLog.browser,myLog.time,myLog.type,myLog.method,myLog.create_time AS createTime,myLog.exception_detail AS exceptionDetail
+    </sql>
+</mapper>

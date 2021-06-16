@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hankun.satokenlearn.mapper.MyUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hankun.satokenlearn.entity.MyUser">
+        <id column="user_id" property="userId" />
+        <result column="dept_id" property="deptId" />
+        <result column="user_name" property="userName" />
+        <result column="password" property="password" />
+        <result column="nick_name" property="nickName" />
+        <result column="phone" property="phone" />
+        <result column="email" property="email" />
+        <result column="status" property="status" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        user_id, dept_id, user_name, password, nick_name, phone, email, status, create_time, update_time
+    </sql>
+
+    <!-- 通用查询结果列 别名 -->
+    <sql id="Base_Column_List_Alias">
+        myUser.user_id AS userId,myUser.dept_id AS deptId,myUser.user_name AS userName,myUser.password,myUser.nick_name AS nickName,myUser.phone,myUser.email,myUser.status,myUser.create_time AS createTime,myUser.update_time AS updateTime
+    </sql>
+
+    <select id="getPermissionByUserId" parameterType="integer" resultType="string">
+        select d.permission from
+        my_user a join my_role_user b on a.user_id = b.user_id
+        join my_role_menu c on b.role_id = c.menu_id
+        join my_menu d on d.menu_id = c.menu_id
+        where a.user_id = #{userId} and status = 1
+    </select>
+
+    <select id="getRoleByUserId" parameterType="integer" resultType="string">
+        select d.permission from
+        my_user a join my_role_user b on a.user_id = b.user_id
+                  join my_role c on b.role_id = c.role_id
+        where a.user_id = #{userId}
+    </select>
+
+</mapper>

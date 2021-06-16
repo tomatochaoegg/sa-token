@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hankun.satokenlearn.mapper.MyDictMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.hankun.satokenlearn.entity.MyDict">
+        <id column="dict_id" property="dictId" />
+        <result column="dict_name" property="dictName" />
+        <result column="description" property="description" />
+        <result column="sort" property="sort" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="create_by" property="createBy" />
+        <result column="update_by" property="updateBy" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        create_by,
+        update_by,
+        dict_id, dict_name, description, sort, create_time, update_time
+    </sql>
+
+    <!-- 通用查询结果列 别名 -->
+    <sql id="Base_Column_List_Alias">
+        myDict.dict_id AS dictId,myDict.dict_name AS dictName,myDict.description,myDict.sort,myDict.create_time AS createTime,myDict.update_time AS updateTime
+    </sql>
+</mapper>

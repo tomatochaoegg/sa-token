@@ -42,6 +42,7 @@ ignored: |
   /system/file/**,
   /system/user/exportExcel,
   /system/user2/**,
-  /activeTest,
+  /active,
   /user-info/login,
-  /user-info/render
+  /render,
+  /my-user/login
