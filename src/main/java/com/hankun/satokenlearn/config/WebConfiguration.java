@@ -8,6 +8,7 @@ import com.hankun.satokenlearn.entity.MyMenu;
 import com.hankun.satokenlearn.entity.Resources;
 import com.hankun.satokenlearn.service.MyMenuService;
 import com.hankun.satokenlearn.service.ResourcesService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -66,8 +67,11 @@ public class WebConfiguration implements WebMvcConfigurer {
                                 SaRouterUtil.match("/**", StpUserUtil::checkLogin);
                                 List<MyMenu> list = myMenuService.list();
                                 for (MyMenu resources : list) {
-                                    StpUserUtil.checkPermission(resources.getPermission());
-                                    break;
+                                    //查询当前路径是否需要鉴权
+                                    if (antPathMatcher.match(resources.getUrl(),path)&& StringUtils.isNotBlank(resources.getPermission())){
+                                        StpUserUtil.checkPermission(resources.getPermission());
+                                        break;
+                                    }
                                 }
                             }
                         })
