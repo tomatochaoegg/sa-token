@@ -12,6 +12,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
+
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 /**
@@ -36,6 +38,7 @@ public class MyUser  {
     @ApiModelProperty(value = "部门id")
     private Integer deptId;
 
+    @NotBlank(message = "用户名不能为空")
     @ApiModelProperty(value = "用户名")
     private String userName;
 

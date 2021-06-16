@@ -67,10 +67,12 @@ public class WebConfiguration implements WebMvcConfigurer {
                                 SaRouterUtil.match("/**", StpUserUtil::checkLogin);
                                 List<MyMenu> list = myMenuService.list();
                                 for (MyMenu resources : list) {
-                                    //查询当前路径是否需要鉴权
-                                    if (antPathMatcher.match(resources.getUrl(),path)&& StringUtils.isNotBlank(resources.getPermission())){
-                                        StpUserUtil.checkPermission(resources.getPermission());
-                                        break;
+                                    if (StringUtils.isNotBlank(resources.getUrl())){
+                                        //查询当前路径是否需要鉴权
+                                        if (antPathMatcher.match(resources.getUrl(),path)&& StringUtils.isNotBlank(resources.getPermission())){
+                                            StpUserUtil.checkPermission(resources.getPermission());
+                                            break;
+                                        }
                                     }
                                 }
                             }

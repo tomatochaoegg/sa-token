@@ -5,6 +5,7 @@ import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import com.hankun.satokenlearn.config.AuthService;
 import com.hankun.satokenlearn.config.StpUserUtil;
 import com.hankun.satokenlearn.constant.Constant;
 import com.hankun.satokenlearn.constant.R;
@@ -17,6 +18,7 @@ import com.hankun.satokenlearn.service.impl.MyUserServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +38,9 @@ import com.hankun.satokenlearn.base.controller.BaseController;
 @DS("db1")
 @Slf4j
 public class MyUserController extends BaseController<MyUserServiceImpl,MyUser> {
+
+    @Autowired
+    private AuthService authService;
 
     /**
      * 登录
@@ -59,24 +64,14 @@ public class MyUserController extends BaseController<MyUserServiceImpl,MyUser> {
         if (!BPwdEncoderUtil.matches(myUser.getPassword(), userInfo.getPassword().replace("{bcrypt}", ""))) {
             return R.error(ReturnCode.USER_PASSWORD_ERROR);
         }
-//        LoginOutputDTO loginOutputDTO = mUserInfoMapper.userInfoToLoginOutputDTO(userInfo);
-//        // 设置权限
-//        loginOutputDTO.setResources(authService.getAuthRoleAndResourceByUserId(userInfo.getId()));
-//        if (StrUtil.isNotBlank(userInfo.getDeptId())) {
-//            loginOutputDTO.setDeptName(deptService.getById(userInfo.getDeptId()).getName());
-//        }
-//        List<Role> authRoleListByUserId = baseService.getAuthRoleListByUserId(userInfo.getId());
-//        if (CollUtil.isNotEmpty(authRoleListByUserId)) {
-//            loginOutputDTO.setRoleName(CollUtil.join(authRoleListByUserId.stream().map(Role::getRoleName).collect(Collectors.toList()), ","));
-//        }
         // sa-token 登录 此处有多个api 基本满足所有的登录需求 很实用
         StpUserUtil.setLoginId(userInfo.getUserId());
         // 获取token
         SaTokenInfo tokenInfo = StpUserUtil.getTokenInfo();
         // 获取session
         SaSession saSession = StpUserUtil.getSession();
-        // 设置用户信息
-        saSession.setAttribute(Constant.SESSION_USER_KEY, "权限菜单信息");
+        // 设置用户信息 根据实际场景返回数据
+        saSession.setAttribute(Constant.SESSION_USER_KEY, authService.getPermissionByUserId(userInfo.getUserId()));
         return success(tokenInfo.getTokenValue());
     }
 

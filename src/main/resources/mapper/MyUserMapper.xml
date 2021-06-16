@@ -27,18 +27,17 @@
     </sql>
 
     <select id="getPermissionByUserId" parameterType="integer" resultType="string">
-        select d.permission from
-        my_user a join my_role_user b on a.user_id = b.user_id
-        join my_role_menu c on b.role_id = c.menu_id
+        select distinct d.permission from
+        my_role_user b
+        join my_role_menu c on b.role_id = c.role_id
         join my_menu d on d.menu_id = c.menu_id
-        where a.user_id = #{userId} and status = 1
+        where b.user_id = #{userId}
     </select>
 
     <select id="getRoleByUserId" parameterType="integer" resultType="string">
-        select d.permission from
-        my_user a join my_role_user b on a.user_id = b.user_id
-                  join my_role c on b.role_id = c.role_id
-        where a.user_id = #{userId}
+        select distinct role_id from
+        my_role_user b
+        where user_id = #{userId}
     </select>
 
 </mapper>

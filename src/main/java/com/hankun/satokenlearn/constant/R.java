@@ -51,7 +51,10 @@ public class R<T> {
     }
 
     public static <T> R<T> error(ReturnCode returnCode) {
-        return new R<T>(returnCode, null);
+        R<T> r = new R<>();
+        r.setCode(returnCode.getCode());
+        r.setMsg(returnCode.getMsg());
+        return r;
     }
 
     public static <T> R<T> error(Integer code, String msg) {

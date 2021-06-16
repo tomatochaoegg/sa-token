@@ -6,11 +6,18 @@ import cn.dev33.satoken.exception.NotRoleException;
 import com.hankun.satokenlearn.constant.R;
 import com.hankun.satokenlearn.constant.ReturnCode;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.AuthorizationException;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.List;
 
 /**
  * @Author：hankun
@@ -85,5 +92,20 @@ public class TokenExceptionHandler {
         return R.error(ReturnCode.USER_NOPERMISSION_LOCKED_ERROR.getCode(), exception.getMessage());
     }
 
-
+    @ExceptionHandler(value = Exception.class)
+    public Object handleException(Exception ex) {
+        // 参数不合法
+        if (ex instanceof MethodArgumentNotValidException) {
+            BindingResult result = ((MethodArgumentNotValidException) ex).getBindingResult();
+            if (result.hasErrors()) {
+                List<ObjectError> errors = result.getAllErrors();
+                for (ObjectError p : errors) {
+                    FieldError fieldError = (FieldError) p;
+                    log.warn("Data check failure : object={}, field={}, errorMessage={}", fieldError.getObjectName(), fieldError.getField(), fieldError.getDefaultMessage());
+                    return R.error(ReturnCode.CHECK_ERROR.getCode(), fieldError.getDefaultMessage());
+                }
+            }
+        }
+        return R.error(ReturnCode.OTHER_ERROR);
+    }
 }
