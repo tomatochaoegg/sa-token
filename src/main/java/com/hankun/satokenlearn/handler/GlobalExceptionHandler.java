@@ -6,7 +6,6 @@ import cn.dev33.satoken.exception.NotRoleException;
 import com.hankun.satokenlearn.constant.R;
 import com.hankun.satokenlearn.constant.ReturnCode;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authz.AuthorizationException;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -27,7 +26,7 @@ import java.util.List;
 @RestControllerAdvice
 @Order(-5)
 @Slf4j
-public class TokenExceptionHandler {
+public class GlobalExceptionHandler {
 
     /**
      * token相关异常
