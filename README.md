@@ -13,7 +13,11 @@ sa-token \ springboot \ hutool \ mybatis-plus
 
 #### 安装教程
 
+[gitee地址](https://gitee.com/tomatochaoegg/sa-token)
 
+
+
+[github地址](https://github.com/tomatochaoegg/sa-token)
 
 #### 使用说明
 
