@@ -18,7 +18,10 @@ sa-token \ springboot \ hutool \ mybatis-plus
 #### 使用说明
 
 **里面使用了两种用户认证体系（两个不同的库） 互不影响**
-用户名amin  123456
+/user-info/login
+/my-user/login
+接口文档：doc.html
+**用户名admin  密码123456**
 
 #### 参与贡献
 
