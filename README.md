@@ -1,7 +1,9 @@
 # sa-token
 
 #### 介绍
-学习sa-token
+第一次在码云写项目 欢迎大家指教
+
+本项目主要是自己学习sa-token
 
 #### 软件架构
 sa-token \ springboot \ hutool \ mybatis-plus
