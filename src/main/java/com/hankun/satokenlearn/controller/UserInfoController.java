@@ -75,7 +75,7 @@ public class UserInfoController extends BaseController<UserInfoServiceImpl,UserI
 //            loginOutputDTO.setRoleName(CollUtil.join(authRoleListByUserId.stream().map(Role::getRoleName).collect(Collectors.toList()), ","));
 //        }
         // sa-token 登录 此处有多个api 基本满足所有的登录需求 很实用
-        StpUtil.setLoginId(userInfo.getId());
+        StpUtil.login(userInfo.getId());
         // 获取token
         SaTokenInfo tokenInfo = StpUtil.getTokenInfo();
         // 获取session

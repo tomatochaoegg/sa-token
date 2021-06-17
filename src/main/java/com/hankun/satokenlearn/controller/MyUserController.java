@@ -65,7 +65,7 @@ public class MyUserController extends BaseController<MyUserServiceImpl,MyUser> {
             return R.error(ReturnCode.USER_PASSWORD_ERROR);
         }
         // sa-token 登录 此处有多个api 基本满足所有的登录需求 很实用
-        StpUserUtil.setLoginId(userInfo.getUserId());
+        StpUserUtil.login(userInfo.getUserId());
         // 获取token
         SaTokenInfo tokenInfo = StpUserUtil.getTokenInfo();
         // 获取session

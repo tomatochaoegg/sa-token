@@ -1,7 +1,7 @@
 package com.hankun.satokenlearn.config;
 
 import cn.dev33.satoken.interceptor.SaRouteInterceptor;
-import cn.dev33.satoken.router.SaRouterUtil;
+import cn.dev33.satoken.router.SaRouter;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.URLUtil;
 import com.hankun.satokenlearn.entity.MyMenu;
@@ -48,7 +48,7 @@ public class WebConfiguration implements WebMvcConfigurer {
                             //要求拦截的路径 先检测是否登录 多账号体系 可以通过添加路径前缀区分
                             //第一种用户体系
                             if (!path.startsWith("/my")){
-                                SaRouterUtil.match("/**", StpUtil::checkLogin);
+                                SaRouter.match("/**", StpUtil::checkLogin);
                                 //检测权限 利用缓存机制 不用每次查询
                                 List<Resources> routerList = resourcesService.getRouterList();
                                 for (Resources resources : routerList) {
@@ -56,7 +56,7 @@ public class WebConfiguration implements WebMvcConfigurer {
                                     // 如果匹配不成功就匹配 /** URL路径了
                                     if (antPathMatcher.match(resources.getResPath(), path) &&
                                             saRequest.getMethod().equalsIgnoreCase(resources.getHttpMethod())) {
-                                        SaRouterUtil.match(Collections.singletonList(resources.getResPath()), () -> {
+                                        SaRouter.match(Collections.singletonList(resources.getResPath()), () -> {
                                             StpUtil.checkPermission(resources.getResCode());
                                         });
                                         break;
@@ -64,7 +64,7 @@ public class WebConfiguration implements WebMvcConfigurer {
                                 }
                             }else {
                                 //第二种认证体系
-                                SaRouterUtil.match("/**", StpUserUtil::checkLogin);
+                                SaRouter.match("/**", StpUserUtil::checkLogin);
                                 List<MyMenu> list = myMenuService.list();
                                 for (MyMenu resources : list) {
                                     if (StringUtils.isNotBlank(resources.getUrl())){
